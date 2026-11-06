@@ -21,15 +21,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        System.out.println("=================================================");
-        System.out.println("  CONCURRENT JAVA TICKETING SYSTEM (PHASE 2)     ");
-        System.out.println("=================================================");
+        System.out.println(" ......WELL-COME...... ");
 
         while (running) {
             System.out.println("\n--- MAIN MENU ---");
-            System.out.println("1. Browse Events (Uses Hot Cache Lookup)");
+            System.out.println("1. Browse Events ");
             System.out.println("2. View Seating Arrangements Status");
-            System.out.println("3. Place a Short 10-Second Hold (Watch Sweeper)");
+            System.out.println("3. Place a Short 10-Second Hold ");
             System.out.println("4. View All System Active Transaction Logs");
             System.out.println("5. Exit Application");
             System.out.print("Select an option (1-5): ");
