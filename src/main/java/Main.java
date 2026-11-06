@@ -62,7 +62,6 @@ public class Main {
         ZonedDateTime eventStart = ZonedDateTime.of(2026, 12, 15, 19, 30, 0, 0, venue.timezone());
         Event event = new Event(EVENT_ID, venue.id(), "The Phantom of the Opera Grand Premiere", eventStart, eventStart.plusHours(3), EventStatus.ACTIVE);
 
-        // Populate our LRU cache for high performance
         eventCache.put(EVENT_ID, event);
 
         seats.add(new Seat("S-01", venue.id(), "Orchestra", "Row-A", 1, Map.of()));
@@ -84,7 +83,6 @@ public class Main {
         Map<String, Reservation> activeReservations = ticketingService.getReservationTable();
 
         for (Seat seat : seats) {
-            // Check if there is an active holding blocking this seat
             boolean isHeld = activeReservations.values().stream()
                     .anyMatch(r -> r.status() == ReservationStatus.HOLD && !r.isExpired());
 
@@ -104,7 +102,6 @@ public class Main {
         System.out.print("Enter Customer Contact Email address: ");
         String email = scanner.nextLine();
 
-        // Place a short 10-second hold to let you see the scheduler thread jump in
         long holdTimeSeconds = 10;
         Reservation res = ticketingService.placeHold(EVENT_ID, targetSeat, email, holdTimeSeconds);
 
