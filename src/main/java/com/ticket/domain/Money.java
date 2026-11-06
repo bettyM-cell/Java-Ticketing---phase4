@@ -16,7 +16,6 @@ public final class Money {
         return new Money(BigDecimal.valueOf(amount));
     }
 
-    // This is the missing method that the test is looking for!
     public Money applyDiscount(DiscountType discountType) {
         return new Money(discountType.apply(this.amount));
     }
