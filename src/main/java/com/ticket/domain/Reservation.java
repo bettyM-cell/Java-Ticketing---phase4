@@ -11,9 +11,6 @@ public record Reservation(
         Instant confirmedAt,
         Instant holdExpiresAt
 ) {
-    /**
-     * Checks if a temporary hold has passed its expiration window.
-     */
     public boolean isExpired() {
         return status == ReservationStatus.HOLD && holdExpiresAt != null && Instant.now().isAfter(holdExpiresAt);
     }
