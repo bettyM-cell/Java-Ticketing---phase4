@@ -18,7 +18,7 @@ public class ConcurrencyAndCacheTest {
 
     @Test
     void testParallelRaceConditionOnlyOneSucceeds() throws InterruptedException {
-        // Arrange
+
         TicketingService ticketingService = new TicketingService();
         Seat targetSeat = new Seat("S-99", "V-01", "Orchestra", "Row-A", 1, Map.of());
 
@@ -30,12 +30,11 @@ public class ConcurrencyAndCacheTest {
         AtomicInteger successCount = new AtomicInteger(0);
         AtomicInteger failureCount = new AtomicInteger(0);
 
-        // Act
         for (int i = 0; i < threadCount; i++) {
             final int index = i;
             executor.submit(() -> {
                 try {
-                    startGate.await(); // Sync threads to strike at the exact same moment
+                    startGate.await(); 
                     ticketingService.placeHold("E-01", targetSeat, "user" + index + "@test.com", 10);
                     successCount.incrementAndGet();
                 } catch (InvalidSeatException e) {
@@ -48,11 +47,10 @@ public class ConcurrencyAndCacheTest {
             });
         }
 
-        startGate.countDown(); // Fire race condition signal
+        startGate.countDown();
         endGate.await(5, TimeUnit.SECONDS);
         executor.shutdown();
 
-        // Assert rules: Exactly 1 worker wins, 9 fail with proper domain boundaries
         assertEquals(1, successCount.get(), "Only exactly one client can secure a hold transaction.");
         assertEquals(9, failureCount.get(), "Remaining 9 parallel threads must fail deterministically.");
         ticketingService.shutdown();
@@ -60,21 +58,16 @@ public class ConcurrencyAndCacheTest {
 
     @Test
     void testLruCacheEvictionMetrics() {
-        // Arrange (Cache capacity capped at 3 items)
         LruCache<String, String> cache = new LruCache<>(3);
 
-        // Act
+
         cache.put("A", "Data-A");
         cache.put("B", "Data-B");
         cache.put("C", "Data-C");
 
-        // Touch item A to move it to the top of recent usage stack
         cache.get("A");
-
-        // Push new item to break capacity barrier
         cache.put("D", "Data-D");
-
-        // Assert: Item B should be evicted since it was the oldest untouched element
+        
         assertTrue(cache.get("A").isPresent());
         assertTrue(cache.get("C").isPresent());
         assertTrue(cache.get("D").isPresent());
