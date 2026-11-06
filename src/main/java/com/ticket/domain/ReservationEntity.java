@@ -28,7 +28,6 @@ public class ReservationEntity {
     @Column(name = "hold_expires_at")
     private Instant holdExpiresAt;
 
-    // MANDATORY: Hibernate No-Arg Constructor
     public ReservationEntity() {}
 
     public ReservationEntity(String id, String eventId, String customerEmail, ReservationStatus status, Instant createdAt, Instant holdExpiresAt) {
