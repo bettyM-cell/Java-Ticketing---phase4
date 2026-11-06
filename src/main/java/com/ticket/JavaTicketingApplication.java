@@ -16,7 +16,6 @@ public class JavaTicketingApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(JavaTicketingApplication.class);
 
-        // Using .put() ensures perfect compilation compliance
         Map<String, Object> props = new HashMap<>();
         props.put("spring.profiles.active", "test");
         props.put("spring.main.web-application-type", "servlet");
