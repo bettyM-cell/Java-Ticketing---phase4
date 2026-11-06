@@ -17,7 +17,6 @@ public class VenueEntity {
     @Column(name = "timezone", nullable = false)
     private String timezone;
 
-    // MANDATORY: Hibernate No-Arg Constructor
     public VenueEntity() {}
 
     public VenueEntity(String id, String name, String address, String timezone) {
